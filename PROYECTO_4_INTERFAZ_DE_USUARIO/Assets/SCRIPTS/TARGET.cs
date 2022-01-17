@@ -14,7 +14,6 @@ public class TARGET : MonoBehaviour
     {
         //DESTRUYE EL OBJETO TRAS (2s)
         Destroy(gameObject, timeDestroy);
-
         gameManagerScript = FindObjectOfType<GameManager>();
     }
 
@@ -45,8 +44,8 @@ public class TARGET : MonoBehaviour
         {
             //DAR PUNTOS
             gameManagerScript.UpdateScore(points);
-
         }
+
         Destroy(gameObject);
 
         Instantiate(explosionParticle, transform.position,
@@ -56,14 +55,11 @@ public class TARGET : MonoBehaviour
     private void OnDestroy()
     {
         gameManagerScript.targetPositions.Remove(transform.position);
-
     }
 
     public void GameOver()
     {
         gameOver = true;
         gameOverText.gameObject.SetActive(true);
-
     }
-
 }

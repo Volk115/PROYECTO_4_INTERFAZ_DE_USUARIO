@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
     public bool gameOver;
     public GameObject[] targetPrefabs;
     public Vector3 randomSpawnPos;
     public List<Vector3> targetPositions;
+    //public GameObect 
 
     private float minX = -3.75f;
     private float minY = -3.75f;
@@ -21,22 +23,10 @@ public class GameManager : MonoBehaviour
     //SCORE TEXT
     public TextMeshProUGUI scoreText;
     private int score;
+    public GameManager gameOverPanel;
 
     //CADA DOS SEGUNDOS APARECERA UN OBJETO EN PANTALLA
     private float spawnRate = 0.5f;
-
-    private void Start()
-    {
-        StartCoroutine("SpawnRandomTarget");
-
-        //JetPrains Rider
-        //ASI CADA VEZ QUE REINICIEMOS EL JUEGO, EL SCORE SERA DE 0
-        score = 0;
-        missCounter = 0;
-        StartCrountine("SpawnRandomTarget");
-        gameOverText.gameObject.SetActive(false);
-
-    }
 
     public Vector3 RandomSpawnPosition()
     {
@@ -74,7 +64,20 @@ public class GameManager : MonoBehaviour
     {
         score += pointsToAdd;
         scoreText.text = $"Score: {score}";
-
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartGame() 
+    {
+        //ASI CADA VEZ QUE REINICIEMOS EL JUEGO, EL SCORE SERA DE 0
+        score = 0;
+        UpdateScore(pointsToAdd: 0);
+        missCounter = 0;
+        gameOverPanel.SetActive(false);
+        StartCoroutine("SpawnRandomTarget");
+    }
 }
